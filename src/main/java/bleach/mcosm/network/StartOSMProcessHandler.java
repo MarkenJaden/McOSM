@@ -19,8 +19,6 @@ public class StartOSMProcessHandler implements IMessageHandler<StartOSMProcess, 
     public IMessage onMessage(StartOSMProcess message, MessageContext ctx) {
         // This is the player the packet was sent to the server from
         EntityPlayerMP serverPlayer = ctx.getServerHandler().player;
-        // The value that was sent
-        int start = message.start;
         // Execute the action on the main server thread by adding it as a scheduled task
         double[] latCoords = GeoPos.toLatLonBTE(serverPlayer.getPosition());
         String response;
