@@ -34,7 +34,7 @@ public class McOSM {
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
 
-        McOSMPacketHandler.INSTANCE.registerMessage(StartOSMProcessHandler.class, StartOSMProcess.class, 0, Side.SERVER);
+        McOSMPacketHandler.INSTANCE.registerMessage(StartOSMProcessHandler.class, StartOSMProcess.class, 1, Side.SERVER);
 
         if (event.getSide() == Side.CLIENT) {
             ClientCommandHandler.instance.registerCommand(new OSMCommand());

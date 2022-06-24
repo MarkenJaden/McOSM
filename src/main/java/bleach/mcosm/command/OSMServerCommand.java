@@ -20,7 +20,7 @@ public class OSMServerCommand extends CommandBase {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
-        McOSMPacketHandler.INSTANCE.sendToServer(new StartOSMProcess(0));
+        McOSMPacketHandler.INSTANCE.sendToServer(new StartOSMProcess());
     }
 
 }
