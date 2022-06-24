@@ -38,6 +38,7 @@ public class McOSM {
 
         if (event.getSide() == Side.CLIENT) {
             ClientCommandHandler.instance.registerCommand(new OSMCommand());
+            ClientCommandHandler.instance.registerCommand(new OSMServerCommand());
             ClientCommandHandler.instance.registerCommand(new OSMFileCommand());
             ClientCommandHandler.instance.registerCommand(new OSMApiCommand());
             ClientCommandHandler.instance.registerCommand(new OSMShellCommand());
