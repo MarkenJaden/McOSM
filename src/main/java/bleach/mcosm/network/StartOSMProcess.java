@@ -6,7 +6,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 public class StartOSMProcess implements IMessage {
 
-    String coords;
+    public String coords;
+
+    public StartOSMProcess() {
+    }
 
     public StartOSMProcess(int x, int y, int z) {
         coords = x + ";" + y + ";" + z;

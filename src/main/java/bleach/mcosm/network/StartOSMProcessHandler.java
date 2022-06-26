@@ -17,13 +17,16 @@ import java.math.RoundingMode;
 import java.net.URL;
 
 public class StartOSMProcessHandler implements IMessageHandler<StartOSMProcess, IMessage> {
+    public static BlockPos pos;
+
     @Override
     public IMessage onMessage(StartOSMProcess message, MessageContext ctx) {
         // Execute the action on the main server thread by adding it as a scheduled task
 
         String[] coords = message.coords.split(";");
+        pos = new BlockPos(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]));
 
-        double[] d = GeoPos.toLatLonBTE(new BlockPos(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2])));
+        double[] d = GeoPos.toLatLonBTE(pos);
         String response;
         try {
             response = API.call(new URL(API.getApiLink(new BigDecimal(d[0] - 0.001).setScale(6, RoundingMode.HALF_UP).doubleValue(),
