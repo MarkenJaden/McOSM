@@ -54,8 +54,6 @@ public class GuiOSM extends GuiMapBase {
 		lonField.setText(lon + ""); // who needs toString
 		lat1Field.setText(lat1 + "");
 		lon1Field.setText(lon1 + "");
-		
-		buttonList.get(0).enabled = false;
     }
 	
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
