@@ -282,9 +282,7 @@ public class ApiDataHandler {
             case NAIVE_PLAYER:
                 return GeoPos.fromPlayerNaive(lat, lon, lat0, lon0);
             case BTE_00:
-                if (Minecraft.getMinecraft().isSingleplayer())
-                    return GeoPos.from00BTE(lat, lon, (int) Minecraft.getMinecraft().player.posY);
-                else return GeoPos.from00BTE(lat, lon, StartOSMProcessHandler.pos.getY());
+                return GeoPos.from00BTE(lat, lon, StartOSMProcessHandler.pos.getY());
             case BTE_PLAYER:
                 return GeoPos.fromPlayerBTE(lat, lon, lat0, lon0);
             default:
