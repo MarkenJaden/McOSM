@@ -31,7 +31,7 @@ public class OSMInstance {
 
             if (tick > 3600) {
                 System.out.println("Catching Up..");
-                if(StartOSMProcessHandler.playerMP != null) StartOSMProcessHandler.playerMP.sendStatusMessage(new TextComponentString("Catching Up.."), true);
+                if(StartOSMProcessHandler.playerMP != null) StartOSMProcessHandler.playerMP.sendStatusMessage(new TextComponentString("\u00a76Catching Up.."), true);
 //                Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.GAME_INFO, new TextComponentString("\u00a76Catching Up.."));
 
                 if (tick > 3900) tick = 0;
@@ -42,7 +42,7 @@ public class OSMInstance {
             Creatable c = structures.get(0);
             if (!c.progress.isEmpty()) {
                 System.out.println(structures.size() + " Queue | " + c.progress);
-                if(StartOSMProcessHandler.playerMP != null) StartOSMProcessHandler.playerMP.sendStatusMessage(new TextComponentString(structures.size() + " Queue | " + c.progress), true);
+                if(StartOSMProcessHandler.playerMP != null) StartOSMProcessHandler.playerMP.sendStatusMessage(new TextComponentString("\u00a75"+structures.size() + " Queue | \u00a76" + c.progress), true);
             }
 //                Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.GAME_INFO, new TextComponentString("\u00a75" + structures.size() + " Queue | \u00a76" + c.progress));
 
@@ -50,7 +50,7 @@ public class OSMInstance {
                 structures.remove(c);
 
                 if (structures.isEmpty()) {
-                    if(StartOSMProcessHandler.playerMP != null) StartOSMProcessHandler.playerMP.sendStatusMessage(new TextComponentString("Done!"), true);
+                    if(StartOSMProcessHandler.playerMP != null) StartOSMProcessHandler.playerMP.sendStatusMessage(new TextComponentString("\u00a76Done!"), true);
                     System.out.println("Done!");
 //                    Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.GAME_INFO, new TextComponentString("\u00a76Done!"));
                 } else {
