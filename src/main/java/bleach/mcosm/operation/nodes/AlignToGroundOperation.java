@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +23,7 @@ public class AlignToGroundOperation extends Operation {
     public AlignToGroundOperation(List<BlockPos> poses) {
         this.thread = new OperationThread<List<BlockPos>>() {
             public void run() {
-                World world = StartOSMProcessHandler.playerMP.getServerWorld();
+                World world = DimensionManager.getWorld(0);
                 List<BlockPos> aligned = new ArrayList<>();
 
                 for (BlockPos b : poses) {

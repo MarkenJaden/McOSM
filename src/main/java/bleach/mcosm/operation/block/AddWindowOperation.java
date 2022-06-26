@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class AddWindowOperation extends AbstractBlockOperation {
                     i++;
                 }
 
-                World clWorld = Minecraft.getMinecraft().world;
+                World clWorld = DimensionManager.getWorld(0);
                 while (reloaded.size() < chunks.size()) {
                     ChunkPos cp = chunks.get(reloaded.size());
                     reloaded.add(cp);

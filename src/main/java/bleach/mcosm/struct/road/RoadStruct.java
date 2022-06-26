@@ -16,6 +16,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.DimensionManager;
 
 public class RoadStruct extends Creatable {
 
@@ -73,12 +74,12 @@ public class RoadStruct extends Creatable {
 				for (Entry<BlockPos, IBlockState> e: new LinkedHashMap<>(fill).entrySet()) {
 					fill.remove(e.getKey());
 					
-					if (!REPLACEABLE.contains(Minecraft.getMinecraft().world.getBlockState(fillList.get(i)).getBlock())
-							&& REPLACEABLE.contains(Minecraft.getMinecraft().world.getBlockState(fillList.get(i).up()).getBlock())) {
+					if (!REPLACEABLE.contains(DimensionManager.getWorld(0).getBlockState(fillList.get(i)).getBlock())
+							&& REPLACEABLE.contains(DimensionManager.getWorld(0).getBlockState(fillList.get(i).up()).getBlock())) {
 						fill.put(fillList.get(i), e.getValue());
 					} else {
 						fill.put(fillList.get(i).down(), e.getValue());
-						if (Minecraft.getMinecraft().world.getBlockState(fillList.get(i)).getBlock() != Blocks.AIR) {
+						if (DimensionManager.getWorld(0).getBlockState(fillList.get(i)).getBlock() != Blocks.AIR) {
 						}
 					}
 					i++;

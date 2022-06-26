@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class StretchBlocksOperation extends AbstractBlockOperation {
             public void run() {
                 if (poses.isEmpty() || height == 0) return;
 
-                World world = StartOSMProcessHandler.playerMP.world;
+                World world = DimensionManager.getWorld(0);
 
                 double i = 0;
                 for (BlockPos b : poses) {
@@ -42,7 +43,7 @@ public class StretchBlocksOperation extends AbstractBlockOperation {
                     }
                 }
 
-                World clWorld = Minecraft.getMinecraft().world;
+                World clWorld = DimensionManager.getWorld(0);
                 while (reloaded.size() < chunks.size()) {
                     ChunkPos cp = chunks.get(reloaded.size());
                     int newReload = Math.min(3, height - reloadH);

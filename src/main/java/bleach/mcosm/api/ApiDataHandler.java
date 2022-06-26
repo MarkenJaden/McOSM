@@ -146,7 +146,11 @@ public class ApiDataHandler {
                     }
 
                     if (jheight != null) {
-                        height = (int) jheight.getAsDouble();
+                        try {
+                            height = (int) jheight.getAsDouble();
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
                     }
 
                     if (jcolor != null) {

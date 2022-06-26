@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class SetBlocksOperation extends AbstractBlockOperation {
         this.thread = new OperationThread<Void>() {
 
             public void run() {
-                World world = Minecraft.getMinecraft().world;
+                World world = DimensionManager.getWorld(0);
                 double i = 0;
                 for (BlockPos b : poses) {
                     setBlock(b, world, state);
@@ -34,7 +35,7 @@ public class SetBlocksOperation extends AbstractBlockOperation {
                     i += 0.5;
                 }
 
-                World clWorld = Minecraft.getMinecraft().world;
+                World clWorld = DimensionManager.getWorld(0);
                 while (reloaded.size() < chunks.size()) {
                     ChunkPos cp = chunks.get(reloaded.size());
                     reloaded.add(cp);
