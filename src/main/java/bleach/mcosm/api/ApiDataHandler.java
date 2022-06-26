@@ -280,11 +280,11 @@ public class ApiDataHandler {
     private BlockPos latLonToPos(double lat, double lon, double lat0, double lon0) {
         switch (proj) {
             case NAIVE_00:
-                return GeoPos.from00Naive(lat, lon, StartOSMProcessHandler.pos.getY());
+                return GeoPos.from00Naive(lat, lon, StartOSMProcessHandler.y);
             case NAIVE_PLAYER:
                 return GeoPos.fromPlayerNaive(lat, lon, lat0, lon0);
             case BTE_00:
-                return GeoPos.from00BTE(lat, lon, StartOSMProcessHandler.pos.getY());
+                return GeoPos.from00BTE(lat, lon, StartOSMProcessHandler.y);
             case BTE_PLAYER:
                 return GeoPos.fromPlayerBTE(lat, lon, lat0, lon0);
             default:

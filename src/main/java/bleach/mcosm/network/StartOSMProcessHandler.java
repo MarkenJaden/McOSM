@@ -19,12 +19,13 @@ import java.net.URL;
 import java.util.stream.Collectors;
 
 public class StartOSMProcessHandler implements IMessageHandler<StartOSMProcess, IMessage> {
-    public static BlockPos pos;
+    public static int y;
     public static EntityPlayerMP playerMP;
 
     @Override
     public IMessage onMessage(StartOSMProcess message, MessageContext ctx) {
         String[] coords = message.coords.split(";");
+        y = Integer.parseInt(coords[7]);
         playerMP = ctx.getServerHandler().player;
 
         String response = "";

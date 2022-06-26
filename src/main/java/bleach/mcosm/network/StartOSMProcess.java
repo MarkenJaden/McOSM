@@ -12,8 +12,8 @@ public class StartOSMProcess implements IMessage {
     public StartOSMProcess() {
     }
 
-    public StartOSMProcess(double lat, double lon, double lat1, double lon1, boolean buildings, boolean roads, boolean trees) {
-        coords = lat + ";" + lon + ";" + lat1 + ";" + lon1 + ";" + buildings + ";" + roads + ";" + trees;
+    public StartOSMProcess(double lat, double lon, double lat1, double lon1, boolean buildings, boolean roads, boolean trees, int y) {
+        coords = lat + ";" + lon + ";" + lat1 + ";" + lon1 + ";" + buildings + ";" + roads + ";" + trees + ";" + y;
     }
 
     @Override

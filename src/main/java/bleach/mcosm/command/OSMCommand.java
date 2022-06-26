@@ -39,11 +39,11 @@ public class OSMCommand extends CommandBase {
 					new BigDecimal(d[0] - 0.001).setScale(6, RoundingMode.HALF_UP).doubleValue(),
 					new BigDecimal(d[1] - 0.001).setScale(6, RoundingMode.HALF_UP).doubleValue(),
 					new BigDecimal(d[0] + 0.001).setScale(6, RoundingMode.HALF_UP).doubleValue(),
-					new BigDecimal(d[1] + 0.001).setScale(6, RoundingMode.HALF_UP).doubleValue()));
+					new BigDecimal(d[1] + 0.001).setScale(6, RoundingMode.HALF_UP).doubleValue(), sender.getPosition().getY()));
 		} else if (args.length == 4) {
 			try {
 				McOSM.guiQueue.add(new GuiOSM(Double.parseDouble(args[0]), Double.parseDouble(args[1]),
-						Double.parseDouble(args[2]), Double.parseDouble(args[3])));
+						Double.parseDouble(args[2]), Double.parseDouble(args[3]), sender.getPosition().getY()));
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 				throw new CommandException("Invalid Coordinate [Arg ?]", new Object[0]);

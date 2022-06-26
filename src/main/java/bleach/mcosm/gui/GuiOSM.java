@@ -28,11 +28,14 @@ public class GuiOSM extends GuiMapBase {
 	private GuiTextField lonField;
 	private GuiTextField lat1Field;
 	private GuiTextField lon1Field;
+
+	private int y;
 	
 	private String outputText = "";
 	
-	public GuiOSM(double lat, double lon, double lat1, double lon1) {
+	public GuiOSM(double lat, double lon, double lat1, double lon1, int y) {
 		super(lat, lon, lat1, lon1);
+		this.y = y;
 	}
 	
 	public void initGui() {
@@ -84,7 +87,7 @@ public class GuiOSM extends GuiMapBase {
 				double minLon = Double.parseDouble(lonField.getText());
 				double maxLat = Double.parseDouble(lat1Field.getText());
 				double maxLon = Double.parseDouble(lon1Field.getText());
-				McOSMPacketHandler.INSTANCE.sendToServer(new StartOSMProcess(minLat, minLon, maxLat, maxLon, buttonList.get(2).displayString.startsWith("\u00a7a"), buttonList.get(3).displayString.startsWith("\u00a7a"), buttonList.get(4).displayString.startsWith("\u00a7a")));
+				McOSMPacketHandler.INSTANCE.sendToServer(new StartOSMProcess(minLat, minLon, maxLat, maxLon, buttonList.get(2).displayString.startsWith("\u00a7a"), buttonList.get(3).displayString.startsWith("\u00a7a"), buttonList.get(4).displayString.startsWith("\u00a7a"), y));
 
 				Minecraft.getMinecraft().displayGuiScreen(null);
 				break;
