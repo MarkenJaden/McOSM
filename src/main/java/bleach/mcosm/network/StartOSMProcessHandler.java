@@ -6,6 +6,7 @@ import bleach.mcosm.api.ApiDataHandler;
 import bleach.mcosm.utils.GeoPos;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -18,6 +19,7 @@ import java.net.URL;
 
 public class StartOSMProcessHandler implements IMessageHandler<StartOSMProcess, IMessage> {
     public static BlockPos pos;
+    public static EntityPlayerMP playerMP;
 
     @Override
     public IMessage onMessage(StartOSMProcess message, MessageContext ctx) {
@@ -25,6 +27,7 @@ public class StartOSMProcessHandler implements IMessageHandler<StartOSMProcess, 
 
         String[] coords = message.coords.split(";");
         pos = new BlockPos(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]));
+        playerMP = ctx.getServerHandler().player;
 
         double[] d = GeoPos.toLatLonBTE(pos);
         String response;

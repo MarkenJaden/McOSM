@@ -1,9 +1,6 @@
 package bleach.mcosm;
 
 import bleach.mcosm.struct.Creatable;
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.text.ChatType;
-import net.minecraft.util.text.TextComponentString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +27,8 @@ public class OSMInstance {
             tick++;
 
             if (tick > 3600) {
-                Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.GAME_INFO, new TextComponentString("\u00a76Catching Up.."));
+                System.out.println("Catching Up..");
+//                Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.GAME_INFO, new TextComponentString("\u00a76Catching Up.."));
 
                 if (tick > 3900) tick = 0;
 
@@ -38,14 +36,15 @@ public class OSMInstance {
             }
 
             Creatable c = structures.get(0);
-            if (!c.progress.isEmpty()) Minecraft.getMinecraft().ingameGUI.addChatMessage(
-                    ChatType.GAME_INFO, new TextComponentString("\u00a75" + structures.size() + " Queue | \u00a76" + c.progress));
+            if (!c.progress.isEmpty()) System.out.println(structures.size() + " Queue | " + c.progress);
+//                Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.GAME_INFO, new TextComponentString("\u00a75" + structures.size() + " Queue | \u00a76" + c.progress));
 
             if (c.tick()) {
                 structures.remove(c);
 
                 if (structures.isEmpty()) {
-                    Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.GAME_INFO, new TextComponentString("\u00a76Done!"));
+                    System.out.println("Done!");
+//                    Minecraft.getMinecraft().ingameGUI.addChatMessage(ChatType.GAME_INFO, new TextComponentString("\u00a76Done!"));
                 } else {
                     System.out.println("Done! Queue: " + structures.size());
                 }

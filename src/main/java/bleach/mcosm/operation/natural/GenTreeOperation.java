@@ -1,5 +1,6 @@
 package bleach.mcosm.operation.natural;
 
+import bleach.mcosm.network.StartOSMProcessHandler;
 import bleach.mcosm.operation.Operation;
 import bleach.mcosm.operation.OperationThread;
 import bleach.mcosm.utils.gen.OSMGenCanopyTree;
@@ -10,7 +11,6 @@ import net.minecraft.block.BlockOldLeaf;
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -41,7 +41,7 @@ public class GenTreeOperation extends Operation {
     }
 
     protected void generateTree(TreeType type, BlockPos pos) {
-        World world = Minecraft.getMinecraft().world;
+        World world = StartOSMProcessHandler.playerMP.world;
 
         Random rand = new Random();
         WorldGenAbstractTree gen;
