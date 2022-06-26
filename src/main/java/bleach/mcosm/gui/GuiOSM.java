@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import bleach.mcosm.network.McOSMPacketHandler;
+import bleach.mcosm.network.StartOSMProcess;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import com.google.gson.JsonObject;
@@ -21,10 +23,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 
 public class GuiOSM extends GuiMapBase {
-	
-	protected ApiDataHandler apiData;
-	protected List<JsonObject> ways = new ArrayList<>();
-	protected List<JsonObject> nodes = new ArrayList<>();
 	
 	private GuiTextField latField;
 	private GuiTextField lonField;
@@ -46,11 +44,7 @@ public class GuiOSM extends GuiMapBase {
 		addButton(new GuiButton(2, mapX - 65, mapY, 60, 20, "\u00a7aBuildings"));
 		addButton(new GuiButton(3, mapX - 65, mapY + 22, 60, 20, "\u00a7aRoads"));
 		addButton(new GuiButton(4, mapX - 65, mapY + 44, 60, 20, "\u00a7aTrees"));
-		
-		addButton(new GuiButton(5, mapX - 65, mapY + 72, 60, 20, "Global"));
-		
-		addButton(new GuiButton(6, mapX + mapLen - 153, mapY + mapHei + 5, 75, 20, "Download"));
-		
+
 		latField = new GuiTextField(256, fontRenderer, mapX + mapLen + 4, mapY + 10, 80, 20);
 		lonField = new GuiTextField(257, fontRenderer, mapX + mapLen + 4, mapY + 45, 80, 20);
 		lat1Field = new GuiTextField(258, fontRenderer, mapX + mapLen + 4, mapY + 80, 80, 20);
@@ -79,26 +73,21 @@ public class GuiOSM extends GuiMapBase {
 			h += 10;
 		}
 		
-		if (apiData != null) {
-			drawString(fontRenderer, "Structures: " + (ways.size() + nodes.size()), mapX + 2, mapY - 10, 0x90a0a0);
-		}
-		
 		latField.drawTextBox();
 		lonField.drawTextBox();
 		lat1Field.drawTextBox();
 		lon1Field.drawTextBox();
 	}
 	
-	protected void actionPerformed(GuiButton button) throws IOException {
+	protected void actionPerformed(GuiButton button) {
 		switch (button.id) {
 			case 0:
-				if (apiData == null) break;
-				
-				updateLists();
-				apiData.ways = new ArrayList<>(ways);
-				apiData.nodes = new ArrayList<>(nodes);
-				if (buttonList.get(5).displayString.equals("Local")) apiData.proj = Projection.BTE_PLAYER;
-				apiData.addToInstance(McOSM.osmInst);
+				double minLat = Double.parseDouble(latField.getText());
+				double minLon = Double.parseDouble(lonField.getText());
+				double maxLat = Double.parseDouble(lat1Field.getText());
+				double maxLon = Double.parseDouble(lon1Field.getText());
+				McOSMPacketHandler.INSTANCE.sendToServer(new StartOSMProcess(minLat, minLon, maxLat, maxLon, buttonList.get(2).displayString.startsWith("\u00a7a"), buttonList.get(3).displayString.startsWith("\u00a7a"), buttonList.get(4).displayString.startsWith("\u00a7a")));
+
 				Minecraft.getMinecraft().displayGuiScreen(null);
 				break;
 			case 1:
@@ -107,39 +96,6 @@ public class GuiOSM extends GuiMapBase {
 			case 2: case 3: case 4:
 				String s = button.displayString;
 				button.displayString = (s.startsWith("\u00a7c") ? "\u00a7a" : "\u00a7c") + s.substring(2);
-				updateLists();
-				break;
-			case 5:
-				button.displayString = button.displayString.equals("Global") ? "Local" : "Global";
-				break;
-			case 6:
-				try {
-					double minLat = Double.parseDouble(latField.getText());
-					double minLon = Double.parseDouble(lonField.getText());
-					double maxLat = Double.parseDouble(lat1Field.getText());
-					double maxLon = Double.parseDouble(lon1Field.getText());
-
-					String response = API.call(new URL(API.getApiLink(minLat, minLon, maxLat, maxLon, true)));
-					System.out.println(response);
-					JsonObject jsonResponse = new JsonParser().parse(response).getAsJsonObject();
-					
-					apiData = new ApiDataHandler(jsonResponse, Projection.BTE_00);
-					this.ways = new ArrayList<>(apiData.ways);
-					this.nodes = new ArrayList<>(apiData.nodes);
-					buttonList.get(0).enabled = true;
-					buttonList.get(6).enabled = false;
-					outputText = "\u00a7aSuccess!\n\u00a7a(" + String.format("%,d", response.length()) + " Bytes)";
-				} catch (NumberFormatException e) {
-					outputText = "\u00a7cInvalid Lat/Lon!";
-					e.printStackTrace();
-				} catch (IOException e) {
-					outputText = "\u00a7cIO Exception!";
-					e.printStackTrace();
-				} catch (JsonParseException e) {
-					outputText = "\u00a7cInvalid Json\n\u00a7c(rate limit)";
-					e.printStackTrace();
-				}
-				
 				break;
 		}
     }
@@ -165,18 +121,5 @@ public class GuiOSM extends GuiMapBase {
 		lonField.mouseClicked(mouseX, mouseY, mouseButton);
 		lat1Field.mouseClicked(mouseX, mouseY, mouseButton);
 		lon1Field.mouseClicked(mouseX, mouseY, mouseButton);
-	}
-	
-	protected void updateLists() {
-		if (apiData != null) {
-			ways = apiData.ways.stream().filter(j -> 
-					(buttonList.get(2).displayString.startsWith("\u00a7a") && j.get("tags").getAsJsonObject().has("building"))
-					|| (buttonList.get(3).displayString.startsWith("\u00a7a") && j.get("tags").getAsJsonObject().has("highway"))
-					|| (buttonList.get(4).displayString.startsWith("\u00a7a")
-							&& (j.get("tags").getAsJsonObject().has("natural") || j.get("tags").getAsJsonObject().has("barrier"))))
-					.collect(Collectors.toList());
-
-			nodes = apiData.nodes.stream().filter(j -> buttonList.get(4).displayString.startsWith("\u00a7a")).collect(Collectors.toList());
-		}
 	}
 }

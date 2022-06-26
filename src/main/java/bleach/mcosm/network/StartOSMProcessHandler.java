@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
+import java.util.stream.Collectors;
 
 public class StartOSMProcessHandler implements IMessageHandler<StartOSMProcess, IMessage> {
     public static BlockPos pos;
@@ -23,26 +24,27 @@ public class StartOSMProcessHandler implements IMessageHandler<StartOSMProcess, 
 
     @Override
     public IMessage onMessage(StartOSMProcess message, MessageContext ctx) {
-        // Execute the action on the main server thread by adding it as a scheduled task
-
         String[] coords = message.coords.split(";");
-        pos = new BlockPos(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[2]));
         playerMP = ctx.getServerHandler().player;
 
-        double[] d = GeoPos.toLatLonBTE(pos);
-        String response;
+        String response = "";
         try {
-            response = API.call(new URL(API.getApiLink(new BigDecimal(d[0] - 0.001).setScale(6, RoundingMode.HALF_UP).doubleValue(),
-                    new BigDecimal(d[1] - 0.001).setScale(6, RoundingMode.HALF_UP).doubleValue(),
-                    new BigDecimal(d[0] + 0.001).setScale(6, RoundingMode.HALF_UP).doubleValue(),
-                    new BigDecimal(d[1] + 0.001).setScale(6, RoundingMode.HALF_UP).doubleValue(), true)));
+            response = API.call(new URL(API.getApiLink(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]), Double.parseDouble(coords[2]), Double.parseDouble(coords[3]), true)));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
         System.out.println(response);
         JsonObject jsonResponse = new JsonParser().parse(response).getAsJsonObject();
 
         ApiDataHandler apiData = new ApiDataHandler(jsonResponse, ApiDataHandler.Projection.BTE_00);
+        apiData.ways = apiData.ways.stream().filter(j ->
+                        (Boolean.parseBoolean(coords[4]) && j.get("tags").getAsJsonObject().has("building"))
+                                || (Boolean.parseBoolean(coords[5]) && j.get("tags").getAsJsonObject().has("highway"))
+                                || (Boolean.parseBoolean(coords[6])
+                                && (j.get("tags").getAsJsonObject().has("natural") || j.get("tags").getAsJsonObject().has("barrier"))))
+                .collect(Collectors.toList());
+
+        apiData.nodes = apiData.nodes.stream().filter(j -> Boolean.parseBoolean(coords[6])).collect(Collectors.toList());
         apiData.addToInstance(McOSM.osmInst);
         // No response packet
         return null;

@@ -280,9 +280,7 @@ public class ApiDataHandler {
     private BlockPos latLonToPos(double lat, double lon, double lat0, double lon0) {
         switch (proj) {
             case NAIVE_00:
-                if (Minecraft.getMinecraft().isSingleplayer())
-                    return GeoPos.from00Naive(lat, lon, (int) Minecraft.getMinecraft().player.posY);
-                else return GeoPos.from00Naive(lat, lon, StartOSMProcessHandler.pos.getY());
+                return GeoPos.from00Naive(lat, lon, StartOSMProcessHandler.pos.getY());
             case NAIVE_PLAYER:
                 return GeoPos.fromPlayerNaive(lat, lon, lat0, lon0);
             case BTE_00:

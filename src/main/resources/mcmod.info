@@ -7,7 +7,7 @@
   "mcversion": "${mcversion}",
   "url": "https://github.com/BleachDrinker420/McOSM",
   "updateUrl": "https://github.com/BleachDrinker420/McOSM",
-  "authorList": ["Bleach"],
+  "authorList": ["Bleach", "MarkenJaden"],
   "credits": "OpenStreetMap for literally all the data that goes through this mod",
   "logoFile": "",
   "screenshots": [],

@@ -3,6 +3,7 @@ package bleach.mcosm.network;
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import scala.util.control.Exception;
 
 public class StartOSMProcess implements IMessage {
 
@@ -11,8 +12,8 @@ public class StartOSMProcess implements IMessage {
     public StartOSMProcess() {
     }
 
-    public StartOSMProcess(int x, int y, int z) {
-        coords = x + ";" + y + ";" + z;
+    public StartOSMProcess(double lat, double lon, double lat1, double lon1, boolean buildings, boolean roads, boolean trees) {
+        coords = lat + ";" + lon + ";" + lat1 + ";" + lon1 + ";" + buildings + ";" + roads + ";" + trees;
     }
 
     @Override

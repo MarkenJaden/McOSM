@@ -29,7 +29,7 @@ public class OSMCommand extends CommandBase {
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		if (args.length == 0) {
-			double[] d = GeoPos.toLatLonBTE(Minecraft.getMinecraft().player.getPosition());
+			double[] d = GeoPos.toLatLonBTE(sender.getPosition());
 			
 			if (Double.isNaN(d[0]) || !Double.isFinite(d[0]) || Double.isNaN(d[0]) || !Double.isFinite(d[1])) {
 				throw new CommandException("Error: Invalid Current GeoPos", new Object[0]);

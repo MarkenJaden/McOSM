@@ -24,7 +24,7 @@ public class McOSM {
 
     public static final String MODID = "mcosm";
     public static final String NAME = "McOSM";
-    public static final String VERSION = "0.4.2";
+    public static final String VERSION = "0.4.3";
 
     public static OSMInstance osmInst = new OSMInstance();
 
@@ -38,7 +38,6 @@ public class McOSM {
 
         if (event.getSide() == Side.CLIENT) {
             ClientCommandHandler.instance.registerCommand(new OSMCommand());
-            ClientCommandHandler.instance.registerCommand(new OSMServerCommand());
             ClientCommandHandler.instance.registerCommand(new OSMFileCommand());
             ClientCommandHandler.instance.registerCommand(new OSMApiCommand());
             ClientCommandHandler.instance.registerCommand(new OSMShellCommand());
