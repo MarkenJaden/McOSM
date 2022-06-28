@@ -28,7 +28,7 @@ public class AddWindowOperation extends AbstractBlockOperation {
             if (!chunks.contains(c)) chunks.add(c);
         }
 
-        this.thread = new OperationThread<Void>() {
+        thread = new OperationThread<Void>() {
 
             public void run() {
                 /* Abort on buildings that wouldn't make sense in the 1x1 meter minecraft grid */
@@ -38,7 +38,6 @@ public class AddWindowOperation extends AbstractBlockOperation {
 
                 int bound = 1;
                 double wSize = (double) (height - bound) / (double) floors;
-                int wSizeInt = (int) wSize;
 
                 int i = 0;
                 int sinceLast = 3;
@@ -48,7 +47,7 @@ public class AddWindowOperation extends AbstractBlockOperation {
                         if (!isEdge(next)) {
                             double totalH = bound;
                             for (int fl = 0; fl < floors; fl++) {
-                                for (int h = 0; h < wSizeInt - 1; h++) {
+                                for (int h = 0; h < (int) wSize - 1; h++) {
                                     BlockPos b1 = b.up((int) totalH + h), b2 = next.up((int) totalH + h);
                                     setBlock(b1, world, state);
                                     setBlock(b2, world, state);

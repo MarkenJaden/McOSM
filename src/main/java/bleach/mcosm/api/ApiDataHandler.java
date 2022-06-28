@@ -132,7 +132,7 @@ public class ApiDataHandler {
                     IBlockState roofType = Blocks.BRICK_BLOCK.getDefaultState();
 
                     int height = 7;
-                    int floors = 0;
+                    int floors = 1;
 
                     JsonElement jfloors = jtags.get("building:levels");
                     JsonElement jheight = jtags.get("height");
@@ -179,7 +179,7 @@ public class ApiDataHandler {
                         if (jfloors == null && jheight == null) height = 4;
                     }
 
-                    inst.add(new BuildingStruct(nodes, blockType, floors > 0 ? windowType : null, roofType, height, floors));
+                    inst.add(new BuildingStruct(nodes, blockType, windowType, roofType, height, floors));
                 }
 
                 if (jtags.has("highway")) {

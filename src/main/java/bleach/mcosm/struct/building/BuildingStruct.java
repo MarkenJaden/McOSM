@@ -52,12 +52,7 @@ public class BuildingStruct extends Creatable {
 			case 2: return new AlignToGroundOperation(fill);
 			case 3: return new SetBlocksOperation(fill, state);
 			case 4: return new StretchBlocksOperation(fill, height);
-			case 5:
-				if (windowState != null) {
-					return new AddWindowOperation(outline, windowState, height, floors);
-				} else {
-					return new SetBlocksOperation(fill.stream().map(b -> b.up(height - 1)).collect(Collectors.toList()), roofState);
-				}
+			case 5: return new AddWindowOperation(outline, windowState, height, floors);
 			case 6: return new SetBlocksOperation(fill.stream().map(b -> b.up(height - 1)).collect(Collectors.toList()), roofState);
 		}
 
