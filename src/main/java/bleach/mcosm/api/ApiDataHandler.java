@@ -11,9 +11,7 @@ import bleach.mcosm.utils.GeoPos;
 import bleach.mcosm.utils.gen.TreeType;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.block.BlockConcretePowder;
-import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockStainedHardenedClay;
+import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
@@ -129,8 +127,9 @@ public class ApiDataHandler {
                 if (jtags.has("building")) {
                     JsonElement jbuilding = jtags.get("building");
 
-                    IBlockState blockType = Blocks.CONCRETE.getDefaultState();
-                    IBlockState windowType = Blocks.CONCRETE.getDefaultState().withProperty(BlockConcretePowder.COLOR, EnumDyeColor.SILVER);
+                    IBlockState blockType = Blocks.CONCRETE.getDefaultState().withProperty(BlockConcretePowder.COLOR, BlockColors.getRandomGrayscaleColor());
+                    IBlockState windowType = Blocks.GLASS.getDefaultState();
+                    IBlockState roofType = Blocks.BRICK_BLOCK.getDefaultState();
 
                     int height = 7;
                     int floors = 0;
@@ -180,7 +179,7 @@ public class ApiDataHandler {
                         if (jfloors == null && jheight == null) height = 4;
                     }
 
-                    inst.add(new BuildingStruct(nodes, blockType, floors > 0 ? windowType : null, height, floors));
+                    inst.add(new BuildingStruct(nodes, blockType, floors > 0 ? windowType : null, roofType, height, floors));
                 }
 
                 if (jtags.has("highway")) {

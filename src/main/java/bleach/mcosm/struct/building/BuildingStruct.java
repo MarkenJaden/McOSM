@@ -25,8 +25,8 @@ public class BuildingStruct extends Creatable {
 	public int height;
 
 	protected int floors = 1;
-	protected IBlockState roofState = null;
-	protected IBlockState windowState = null;
+	protected IBlockState roofState;
+	protected IBlockState windowState;
 
 	public BuildingStruct(List<BlockPos> nodes, IBlockState state, int height) {
 		this.nodes = nodes;

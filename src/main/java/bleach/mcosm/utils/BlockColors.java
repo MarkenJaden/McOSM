@@ -2,6 +2,7 @@ package bleach.mcosm.utils;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -15,7 +16,7 @@ import net.minecraft.item.EnumDyeColor;
 
 public class BlockColors {
 
-	private static HashMap<IBlockState, Integer> COLORS = null;
+	private static HashMap<IBlockState, Integer> COLORS;
 	
 	private static void initBlockColors() {
 		COLORS = new HashMap<>();
@@ -90,5 +91,24 @@ public class BlockColors {
 		
 		System.out.println(closestLoc + " | " + diff);
 		return closestLoc;
+	}
+
+	public static EnumDyeColor getRandomColor(){
+		return BaseUtils.randomEnum(EnumDyeColor.class);
+	}
+
+	public static EnumDyeColor getRandomGrayscaleColor(){
+		int random = new SecureRandom().nextInt(4);
+		switch (random) {
+			case 0:
+				return EnumDyeColor.GRAY;
+			case 1:
+				return EnumDyeColor.byMetadata(8);
+			case 2:
+				return EnumDyeColor.WHITE;
+			case 3:
+				return EnumDyeColor.BLACK;
+		}
+		return EnumDyeColor.WHITE;
 	}
 }

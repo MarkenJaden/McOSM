@@ -26,7 +26,7 @@ public class StretchBlocksOperation extends AbstractBlockOperation {
             if (!chunks.contains(c)) chunks.add(c);
         }
 
-        this.thread = new OperationThread<Void>() {
+        thread = new OperationThread<Void>() {
 
             public void run() {
                 if (poses.isEmpty() || height == 0) return;
