@@ -54,7 +54,7 @@ public class GuiOSM extends GuiMapBase {
 		lon1Field = new GuiTextField(259, fontRenderer, mapX + mapLen + 4, mapY + 115, 80, 20);
 		
 		latField.setText(lat + "");
-		lonField.setText(lon + ""); // who needs toString
+		lonField.setText(lon + "");
 		lat1Field.setText(lat1 + "");
 		lon1Field.setText(lon1 + "");
     }
@@ -94,7 +94,7 @@ public class GuiOSM extends GuiMapBase {
 			case 1:
 				Minecraft.getMinecraft().displayGuiScreen(null);
 				break;
-			case 2: case 3: case 4:
+			case 2: case 3: case 4: case 5:
 				String s = button.displayString;
 				button.displayString = (s.startsWith("\u00a7c") ? "\u00a7a" : "\u00a7c") + s.substring(2);
 				break;
