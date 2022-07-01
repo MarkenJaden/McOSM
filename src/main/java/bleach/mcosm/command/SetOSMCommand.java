@@ -33,7 +33,9 @@ public class SetOSMCommand extends CommandBase {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		if(args.length > 1 || pos1 == null || pos2 == null) throw new WrongUsageException(getUsage(sender), new Object[0]);
+		if(args.length > 1) throw new WrongUsageException(getUsage(sender), new Object[0]);
+
+		if(pos1 == null || pos2 == null) throw new WrongUsageException("You have to set both region postition with /setosm 1 and /setosm 2" ,new Object[0]);
 
 		if (args.length == 0) {
 			start();
