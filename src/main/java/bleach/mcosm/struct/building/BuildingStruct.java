@@ -13,6 +13,7 @@ import bleach.mcosm.operation.nodes.MakeFillOperation;
 import bleach.mcosm.operation.nodes.MakeOutlineOperation;
 import bleach.mcosm.struct.Creatable;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 
 public class BuildingStruct extends Creatable {
@@ -50,17 +51,18 @@ public class BuildingStruct extends Creatable {
 			case 0: return new MakeOutlineOperation(nodes, false);
 			case 1: return new MakeFillOperation(outline);
 			case 2: return new AlignToGroundOperation(fill);
-			case 3: return new SetBlocksOperation(fill, state);
-			case 4: return new StretchBlocksOperation(fill, height);
-			case 5: return new AddWindowOperation(outline, windowState, height, floors);
-			case 6: return new SetBlocksOperation(fill.stream().map(b -> b.up(height - 1)).collect(Collectors.toList()), roofState);
+			case 3: return new SetBlocksOperation(fill, Blocks.PACKED_ICE.getDefaultState());
+			case 4: return new SetBlocksOperation(outline, state);
+			case 5: return new StretchBlocksOperation(fill, height);
+			case 6: return new AddWindowOperation(outline, windowState, height, floors);
+			case 7: return new SetBlocksOperation(fill.stream().map(b -> b.up(height - 1)).collect(Collectors.toList()), roofState);
 		}
 
 		return null;
 	}
 
 	public int getOpCount() {
-		return 5 + (windowState != null ? 1 : 0) + (roofState != null ? 1 : 0);
+		return 6 + (windowState != null ? 1 : 0) + (roofState != null ? 1 : 0);
 	}
 
 	@SuppressWarnings("unchecked")
